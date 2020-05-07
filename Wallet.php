@@ -4,7 +4,7 @@
  * Wallet
  * 
  * Facade interface to hide submodule complexity. 
- * Make us easy to communicate wallet module
+ * Make us easy to communicate with wallet module
  * 
  * @package Wallet
  * @author Oriza
