@@ -20,7 +20,7 @@ class Wallet {
     
     /** Props */
     protected $log;
-    protected $Ledger;
+    protected $ledger;
     protected $transaction;
     protected $credit = ['TOPUP', 'HOLD', 'PAYMENT', 'INCOME'];
     protected $debit = ['WITHDRAWAL', 'FEE'];
