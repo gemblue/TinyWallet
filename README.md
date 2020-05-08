@@ -1,5 +1,6 @@
 # TinyWallet
-Wallet Library for PHP Projects.
+
+Framework agnostic Wallet library for PHP Projects.
 
 ## Installation
 
