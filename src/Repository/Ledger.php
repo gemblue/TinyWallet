@@ -16,6 +16,7 @@ class Ledger extends Repository {
 
     /** Table */
     protected $table = 'wallet_ledger';
+    protected $transaction = 'wallet_transaction';
     
     /**
      * Construct.
@@ -51,10 +52,33 @@ class Ledger extends Repository {
      */
     public function get($fields = '*', $limit = 5, $order = 0) : array {
 
+        $sql  = "SELECT {$fields} FROM {$this->table} ";
+        $sql .= "JOIN {$this->subject_table} ON {$this->subject_table}.id = {$this->table}.subject_id ";
+        $sql .= "JOIN {$this->transaction} ON {$this->transaction}.id = {$this->table}.transaction_id ";
+        $sql .= "LIMIT {$order},{$limit}";
+        
         if (!$query = mysqli_query($this->connection, $sql))
             throw new \Exception('Failed to get ..');    
         
         return mysqli_fetch_all($query, MYSQLI_ASSOC);
+    }
+
+    /**
+     * Get Total
+     */
+    public function getTotal() {
+        
+        $sql  = "SELECT count(id) as total FROM {$this->table}";
+
+        if (!$query = mysqli_query($this->connection, $sql))
+            throw new \Exception('Failed to get ..');    
+        
+        $result = mysqli_fetch_row($query);
+
+        if (!empty($result))
+            return $result[0];
+
+        return null;
     }
 
     /**
