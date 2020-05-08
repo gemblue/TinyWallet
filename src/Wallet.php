@@ -27,9 +27,11 @@ class Wallet {
     protected $credit = ['TOPUP', 'HOLD', 'PAYMENT', 'INCOME'];
     protected $debit = ['WITHDRAWAL', 'FEE'];
 
-    public function __construct()
+    public function __construct(array $config = [])
     {
-        include(__DIR__ . '/Config/database.php');
+        if(empty($config))
+            include(__DIR__ . '/Config/database.php');
+
         $connection = new Connection($config);
         
         $this->log = new Log($connection);
