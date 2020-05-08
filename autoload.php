@@ -1,14 +1,14 @@
 <?php
 
 /**
- * File autoload
+ * File autoloader.
  * 
- * @author Gemblue
+ * @author Gemblue.
  */
 
-include __DIR__ . '/Wallet.php';
-include __DIR__ . '/Repository/Repository.php';
-include __DIR__ . '/Repository/Transaction.php';
-include __DIR__ . '/Repository/Log.php';
-include __DIR__ . '/Repository/Ledger.php';
-include __DIR__ . '/Connection.php';
+include __DIR__ . '/src/Repository/Repository.php';
+include __DIR__ . '/src/Repository/Transaction.php';
+include __DIR__ . '/src/Repository/Log.php';
+include __DIR__ . '/src/Repository/Ledger.php';
+include __DIR__ . '/src/Connection.php';
+include __DIR__ . '/src/Wallet.php';
