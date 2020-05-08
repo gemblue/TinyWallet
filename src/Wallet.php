@@ -16,6 +16,9 @@ use Gemblue\TinyWallet\Repository\Log;
 use Gemblue\TinyWallet\Repository\Ledger;
 use Gemblue\TinyWallet\Repository\Transaction;
 
+use Gemblue\TinyWallet\Config\Database;
+use Gemblue\TinyWallet\Config\Connection;
+
 class Wallet {
     
     /** Props */
@@ -25,11 +28,13 @@ class Wallet {
     protected $credit = ['TOPUP', 'HOLD', 'PAYMENT', 'INCOME'];
     protected $debit = ['WITHDRAWAL', 'FEE'];
 
-    public function __construct() {
+    public function __construct()
+    {
+        $connection = new Connection((new Database)->config);
         
-        $this->log = new Log;
-        $this->ledger = new Ledger;
-        $this->transaction = new Transaction;
+        $this->log = new Log($connection);
+        $this->ledger = new Ledger($connection);
+        $this->transaction = new Transaction($connection);
         
     }
 

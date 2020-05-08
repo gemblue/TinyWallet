@@ -11,6 +11,7 @@
  */
 
 namespace Gemblue\TinyWallet\Repository;
+use Gemblue\TinyWallet\Connection;
 
 class Transaction extends Repository {
 
@@ -22,9 +23,9 @@ class Transaction extends Repository {
      * 
      * @return void
      */
-    public function __construct() {
-        parent::__construct();        
-    }
+    // public function __construct(Connection $connection) {
+    //     parent::__construct($connection);
+    // }
 
     /**
      * Save.

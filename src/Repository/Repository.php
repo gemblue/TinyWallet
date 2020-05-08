@@ -18,15 +18,9 @@ class Repository {
 
     protected $connection;
 
-    public function __construct() {
-        
+    public function __construct(Connection $connection) 
+    {
         // Inject Connection.
-        $connection = new Connection;
-
-        $this->connection = mysqli_connect($connection->host, $connection->username, $connection->password, $connection->database);
-        
-        if ($this->connection == NULL) {
-            throw new \Exception('Failed to connect with database');
-        }
+        $this->connection = $connection();
     }
 }

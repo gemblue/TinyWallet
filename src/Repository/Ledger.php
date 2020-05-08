@@ -22,9 +22,9 @@ class Ledger extends Repository {
      * 
      * @return void
      */
-    public function __construct() {
-        parent::__construct();        
-    }
+    // public function __construct(Connection $connection) {
+    //     parent::__construct($connection);
+    // }
     
     /**
      * Save.
