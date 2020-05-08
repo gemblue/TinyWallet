@@ -10,7 +10,7 @@
  * @author Gemblue
  */
 
-namespace Gemblue\Wallet\Repository;
+namespace Gemblue\TinyWallet\Repository;
 
 class Ledger extends Repository {
 

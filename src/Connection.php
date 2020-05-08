@@ -8,7 +8,7 @@
  * @author Gemblue
  */
 
-namespace Gemblue\Wallet;
+namespace Gemblue\TinyWallet;
 
 class Connection {
 

@@ -10,11 +10,11 @@
  * @author Oriza
  */
 
-namespace Gemblue\Wallet;
+namespace Gemblue\TinyWallet;
 
-use Gemblue\Wallet\Repository\Log;
-use Gemblue\Wallet\Repository\Ledger;
-use Gemblue\Wallet\Repository\Transaction;
+use Gemblue\TinyWallet\Repository\Log;
+use Gemblue\TinyWallet\Repository\Ledger;
+use Gemblue\TinyWallet\Repository\Transaction;
 
 class Wallet {
     

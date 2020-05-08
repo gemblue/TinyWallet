@@ -10,7 +10,7 @@
  * @author Gemblue
  */
 
-namespace Gemblue\Wallet\Repository;
+namespace Gemblue\TinyWallet\Repository;
 
 class Transaction extends Repository {
 

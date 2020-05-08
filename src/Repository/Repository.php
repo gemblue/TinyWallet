@@ -10,9 +10,9 @@
  * @author Gemblue
  */
 
-namespace Gemblue\Wallet\Repository;
+namespace Gemblue\TinyWallet\Repository;
 
-use Gemblue\Wallet\Connection;
+use Gemblue\TinyWallet\Connection;
 
 class Repository {
 
