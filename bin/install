@@ -1,0 +1,15 @@
+#!/usr/bin/php
+
+<?php
+
+/**
+ * Migrate
+ * 
+ * Migration handler to build/install tables.
+ * 
+ * @author Gemblue
+ */
+
+require_once __DIR__ . '/../src/Config/database.php';
+
+var_dump($config);
