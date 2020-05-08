@@ -1,0 +1,25 @@
+{
+	"name": "gemblue/tiny-wallet",
+	"description": "Simple Wallets for PHP Projects",
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Ahmad Oriza Sahputra",
+			"email": "ahmadoriza@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^7.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Gemblue\\TinyWallet\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Gemblue\\TinyWallet\\Test\\": "test/"
+		}
+	}
+}
