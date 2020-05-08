@@ -62,4 +62,17 @@ class Log extends Repository {
         
         return mysqli_fetch_all($query, MYSQLI_ASSOC);
     }
+
+    /**
+     * Get by transaction id.
+     */
+    public function getByTransactionId($fields = '*', $transactionId) : array {
+        
+        $sql  = "SELECT * FROM {$this->table} WHERE transaction_id = {$transactionId}";
+        
+        if (!$query = mysqli_query($this->connection, $sql))
+            throw new \Exception('Failed to get ..');    
+        
+        return mysqli_fetch_all($query, MYSQLI_ASSOC);
+    }
 }
