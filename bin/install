@@ -24,10 +24,9 @@ _____                  _       _         _    _           _
 \n\n");
 
 // Create connection.
-include(__DIR__ . '/../src/Config/Database.php');
+include(__DIR__ . '/../src/Config/database.php');
 include(__DIR__ . '/../src/Connection.php');
-$dbConfig = new Gemblue\TinyWallet\Config\Database();
-$connection = new Gemblue\TinyWallet\Connection($dbConfig->config);
+$connection = new Gemblue\TinyWallet\Connection($config);
 
 // Prepare SQL
 $migrationFile = __DIR__ . '/../src/Migrations/MigrationCreateTable.php';

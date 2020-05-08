@@ -16,7 +16,6 @@ use Gemblue\TinyWallet\Repository\Log;
 use Gemblue\TinyWallet\Repository\Ledger;
 use Gemblue\TinyWallet\Repository\Transaction;
 
-use Gemblue\TinyWallet\Config\Database;
 use Gemblue\TinyWallet\Connection;
 
 class Wallet {
@@ -30,7 +29,8 @@ class Wallet {
 
     public function __construct()
     {
-        $connection = new Connection((new Database)->config);
+        include(__DIR__ . '/Config/database.php');
+        $connection = new Connection($config);
         
         $this->log = new Log($connection);
         $this->ledger = new Ledger($connection);
