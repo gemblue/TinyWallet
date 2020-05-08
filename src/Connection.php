@@ -16,6 +16,7 @@ class Connection {
     public $username;
     public $password;
     public $database;
+    public $subject_table;
     
     /**
      * Construct.
@@ -30,6 +31,7 @@ class Connection {
         $this->username = $config['username'];
         $this->password = $config['password'];
         $this->database = $config['database'];
+        $this->subject_table = $config['subject_table'];
     }
 }
 
