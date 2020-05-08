@@ -19,15 +19,6 @@ class Transaction extends Repository {
     protected $table = 'wallet_transaction';
 
     /**
-     * Construct.
-     * 
-     * @return void
-     */
-    // public function __construct(Connection $connection) {
-    //     parent::__construct($connection);
-    // }
-
-    /**
      * Save.
      */
     public function save(array $args) : int{
@@ -54,12 +45,30 @@ class Transaction extends Repository {
      */
     public function get($fields = '*', $limit = 5, $order = 0) : array {
         
-        $sql  = "SELECT {$fields} FROM {$this->table} WHERE deleted_at IS NULL LIMIT {$limit}";
+        $sql  = "SELECT {$fields}, {$this->table}.id as id, {$this->table}.created_at as created_at FROM {$this->table} JOIN {$this->subject_table} ON {$this->subject_table}.id = {$this->table}.subject_id WHERE deleted_at IS NULL LIMIT {$order},{$limit}";
         
         if (!$query = mysqli_query($this->connection, $sql))
             throw new \Exception('Failed to get ..');    
 
         return mysqli_fetch_all($query, MYSQLI_ASSOC);
+    }
+
+    /**
+     * Get Total
+     */
+    public function getTotal() {
+        
+        $sql  = "SELECT count(id) as total FROM {$this->table} WHERE deleted_at IS NULL";
+
+        if (!$query = mysqli_query($this->connection, $sql))
+            throw new \Exception('Failed to get ..');    
+        
+        $result = mysqli_fetch_row($query);
+
+        if (!empty($result))
+            return $result[0];
+
+        return null;
     }
 
     /**

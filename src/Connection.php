@@ -13,6 +13,7 @@ namespace Gemblue\TinyWallet;
 class Connection {
 
     public $connection;
+    public $subject_table;
 
     /**
      * Construct.
@@ -24,12 +25,8 @@ class Connection {
         if ($this->connection == NULL) {
             throw new \Exception('Failed to connect with database');
         }
-    }
 
-    // Declare invoke method so we can call instance $connection()
-    public function __invoke()
-    {
-        return $this->connection;
+        $this->subject_table = $dbconfig['subject_table'];
     }
 }
 
