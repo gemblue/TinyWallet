@@ -13,5 +13,6 @@ $config = [
     'host' => 'localhost',
     'username' => 'app',
     'password' => '12345678',
-    'database' => '_wallets'
+    'database' => '_codepolitan',
+    'subject_table' => 'mein_users'
 ];
