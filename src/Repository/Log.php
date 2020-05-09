@@ -12,21 +12,24 @@
 
 namespace Gemblue\TinyWallet\Repository;
 
-class Log extends Repository {
+class Log {
+
+    /** Props */
+    protected $connection;
+    protected $subjectTable;
 
     /** Table */
     protected $table = 'wallet_transaction_log';
     protected $transaction = 'wallet_transaction';
     
     /**
-     * Construct.
-     * 
-     * @return void
+     * Construct
      */
-    public function __construct() {
-        parent::__construct();        
+    public function __construct($connection, $subjectTable) {
+        $this->connection = $connection;
+        $this->subjectTable = $subjectTable;
     }
-    
+
     /**
      * Save.
      */
@@ -56,7 +59,7 @@ class Log extends Repository {
         if ($limit != null) {
             $sql  .= "LIMIT {$limit}";
         }
-
+        
         if (!$query = mysqli_query($this->connection, $sql))
             throw new \Exception('Failed to get ..');    
         
