@@ -6,12 +6,15 @@ error_reporting(E_ALL);
 
 require __DIR__ . '/../autoload.php';
 
-use Gemblue\Wallet\Wallet;
+// Create wallet.
+$wallet = \Gemblue\TinyWallet\Factory::getInstance([
+    'host' => 'localhost',
+    'username' => $_ENV['DBUSER'],
+    'password' => $_ENV['DBPASS'],
+    'database' => $_ENV['DBNAME'],
+    'subjectTable' => 'mein_users'
+]);
 
-$wallet = new Wallet;
-
-/*
-// Income.
 $wallet->record([
     'subject_id' => 1,
     'status' => 'CONFIRMED',
@@ -21,19 +24,3 @@ $wallet->record([
     'code' => NULL,
     'metadata' => NULL
 ]);
-
-// Withdrawal.
-$wallet->record([
-    'subject_id' => 1,
-    'status' => 'CONFIRMED',
-    'type' => 'WITHDRAWAL',
-    'currency' => 'IDR',
-    'amount' => 5000,
-    'code' => NULL,
-    'metadata' => NULL
-]);
-
-$wallet->syncronize();
-*/
-
-echo $wallet->getBalance(1);
