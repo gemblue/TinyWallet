@@ -11,8 +11,6 @@
  * @author Gemblue
  */
 
-require_once __DIR__ . '/../src/Config/database.php';
-
 // Ascii Banner
 echo "
 _____                  _       _         _    _           _   
@@ -26,7 +24,7 @@ _____                  _       _         _    _           _
 \n\n";
 
 // Create connection.
-$connection = mysqli_connect($config['host'], $config['username'], $config['password'], $config['database']);
+$connection = mysqli_connect($argv[1], $argv[2], $argv[3], $argv[4]);
 
 // Prepare SQL
 $table[0] = "CREATE TABLE `wallet` (
