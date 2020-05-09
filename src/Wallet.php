@@ -15,22 +15,29 @@ namespace Gemblue\TinyWallet;
 use Gemblue\TinyWallet\Repository\Log;
 use Gemblue\TinyWallet\Repository\Ledger;
 use Gemblue\TinyWallet\Repository\Transaction;
+use Gemblue\TinyWallet\Repository\Repository;
 
 class Wallet {
     
     /** Props */
-    protected $log;
-    protected $ledger;
-    protected $transaction;
-    protected $credit = ['TOPUP', 'HOLD', 'PAYMENT', 'INCOME'];
-    protected $debit = ['WITHDRAWAL', 'FEE'];
-
-    public function __construct() {
+    public $log;
+    public $ledger;
+    public $transaction;
+    public $credit = ['TOPUP', 'HOLD', 'PAYMENT', 'INCOME'];
+    public $debit = ['WITHDRAWAL', 'FEE'];
+    
+    /**
+     * Construct.
+     */
+    public function __construct(array $config) {
         
-        $this->log = new Log;
-        $this->ledger = new Ledger;
-        $this->transaction = new Transaction;
+        // Connection
+        $connection = mysqli_connect($config['host'], $config['username'], $config['password'], $config['database']);
         
+        // Setup submodules.
+        $this->log = new Log($connection, $config['subjectTable']);
+        $this->ledger = new Ledger($connection, $config['subjectTable']);
+        $this->transaction = new Transaction($connection, $config['subjectTable']);
     }
 
     /**
