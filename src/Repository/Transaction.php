@@ -42,7 +42,7 @@ class Transaction {
         $sql .= "currency = \"{$args['currency']}\", ";
         $sql .= "amount = \"{$args['amount']}\", ";
         $sql .= "code = \"{$args['code']}\", ";
-        $sql .= "metadata = \"{$args['metadata']}\", ";
+        $sql .= "metadata = '" . $args['metadata'] . "', ";
         $sql .= "created_at = \"{$date}\" ";
         
         if (!mysqli_query($this->connection, $sql))
