@@ -12,12 +12,24 @@
 
 namespace Gemblue\TinyWallet\Repository;
 
-class Ledger extends Repository {
+class Ledger {
+    
+    /** Props */
+    protected $connection;
+    protected $subjectTable;
 
     /** Table */
     protected $table = 'wallet_ledger';
     protected $transaction = 'wallet_transaction';
     
+    /**
+     * Construct
+     */
+    public function __construct($connection, $subjectTable) {
+        $this->connection = $connection;
+        $this->subjectTable = $subjectTable;
+    }
+
     /**
      * Save.
      */
@@ -43,9 +55,9 @@ class Ledger extends Repository {
      */
     public function get($limit = 5, $order = 0) : array {
 
-        $sql  = "SELECT any_value({$this->table}.created_at) as created_at, any_value({$this->table}.transaction_id) as transaction_id, any_value({$this->table}.amount) as amount, any_value({$this->table}.entry) as entry, any_value({$this->transaction}.type) as type, any_value({$this->transaction}.currency) as currency, any_value({$this->subject_table}.name) as name ";
+        $sql  = "SELECT any_value({$this->table}.created_at) as created_at, any_value({$this->table}.transaction_id) as transaction_id, any_value({$this->table}.amount) as amount, any_value({$this->table}.entry) as entry, any_value({$this->transaction}.type) as type, any_value({$this->transaction}.currency) as currency, any_value({$this->subjectTable}.name) as name ";
         $sql .= "FROM {$this->table} ";
-        $sql .= "JOIN {$this->subject_table} ON {$this->subject_table}.id = {$this->table}.subject_id ";
+        $sql .= "JOIN {$this->subjectTable} ON {$this->subjectTable}.id = {$this->table}.subject_id ";
         $sql .= "JOIN {$this->transaction} ON {$this->transaction}.id = {$this->table}.transaction_id ";
         $sql .= "GROUP BY {$this->table}.transaction_id ";
         $sql .= "LIMIT {$order},{$limit} ";

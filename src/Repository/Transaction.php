@@ -13,10 +13,22 @@
 namespace Gemblue\TinyWallet\Repository;
 use Gemblue\TinyWallet\Connection;
 
-class Transaction extends Repository {
+class Transaction {
+
+    /** Props */
+    protected $connection;
+    protected $subjectTable;
 
     /** Table */
     protected $table = 'wallet_transaction';
+    
+    /**
+     * Construct
+     */
+    public function __construct($connection, $subjectTable) {
+        $this->connection = $connection;
+        $this->subjectTable = $subjectTable;
+    }
 
     /**
      * Save.
@@ -45,7 +57,7 @@ class Transaction extends Repository {
      */
     public function get($fields = '*', $limit = 5, $order = 0) : array {
         
-        $sql  = "SELECT {$fields}, {$this->table}.id as id, {$this->table}.created_at as created_at FROM {$this->table} JOIN {$this->subject_table} ON {$this->subject_table}.id = {$this->table}.subject_id WHERE deleted_at IS NULL LIMIT {$order},{$limit}";
+        $sql  = "SELECT {$fields}, {$this->table}.id as id, {$this->table}.created_at as created_at FROM {$this->table} JOIN {$this->subjectTable} ON {$this->subjectTable}.id = {$this->table}.subject_id WHERE deleted_at IS NULL LIMIT {$order},{$limit}";
         
         if (!$query = mysqli_query($this->connection, $sql))
             throw new \Exception('Failed to get ..');    
