@@ -32,12 +32,12 @@ include($migrationFile);
 $migration = new Gemblue\TinyWallet\Migrations\MigrationCreateTable();
 $query = $migration->queryUp();
 
-for($i=0; $i<=3; $i++) {
-  $execution = mysqli_query($connection(), $query[$i]);
+for ($i=0; $i<=3; $i++) {
+  	$execution = mysqli_query($connection, $query[$i]);
 }
 
 if ($execution) {
-    echo "Congratulations, installation done!\n\n";
+	echo "Congratulations, installation done!\n\n";
 } else {
-    echo "Failed, please check the database configuration!.\n\n";
+	echo "Failed, please check the database configuration!.\n\n";
 }
