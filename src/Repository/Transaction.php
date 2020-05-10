@@ -11,6 +11,7 @@
  */
 
 namespace Gemblue\TinyWallet\Repository;
+use Gemblue\TinyWallet\Connection;
 
 class Transaction {
 

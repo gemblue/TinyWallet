@@ -17,6 +17,8 @@ use Gemblue\TinyWallet\Repository\Ledger;
 use Gemblue\TinyWallet\Repository\Transaction;
 use Gemblue\TinyWallet\Repository\Repository;
 
+use Gemblue\TinyWallet\Connection;
+
 class Wallet {
     
     /** Props */
