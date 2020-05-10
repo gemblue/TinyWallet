@@ -105,4 +105,22 @@ class Ledger {
 
         return false;
     }
+
+    /**
+     * Is Exist.
+     */
+    public function isExist(int $id) : bool {
+        
+        $sql  = "SELECT id FROM {$this->table} WHERE transaction_id = {$id}";
+        
+        if (!$query = mysqli_query($this->connection, $sql))
+            throw new \Exception('Failed to get ..');    
+        
+        $result = mysqli_fetch_row($query);
+        
+        if (!$result)
+            return false;
+        
+        return true;
+    }
 }
