@@ -15,9 +15,6 @@ namespace Gemblue\TinyWallet;
 use Gemblue\TinyWallet\Repository\Log;
 use Gemblue\TinyWallet\Repository\Ledger;
 use Gemblue\TinyWallet\Repository\Transaction;
-use Gemblue\TinyWallet\Repository\Repository;
-
-use Gemblue\TinyWallet\Connection;
 
 class Wallet {
     
@@ -94,12 +91,14 @@ class Wallet {
                 $amount = '-' . $log['amount'];
             }
 
-            $this->ledger->save([
-                'subject_id' => $log['subject_id'],
-                'transaction_id' => $log['transaction_id'],
-                'amount' => $amount,
-                'entry' => $entry
-            ]);            
+            if (!$this->ledger->isExist($log['transaction_id'])) {
+                $this->ledger->save([
+                    'subject_id' => $log['subject_id'],
+                    'transaction_id' => $log['transaction_id'],
+                    'amount' => $amount,
+                    'entry' => $entry
+                ]);    
+            }        
         }
         
         return true;
