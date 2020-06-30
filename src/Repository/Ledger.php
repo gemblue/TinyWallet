@@ -89,7 +89,7 @@ class Ledger {
     }
 
     /**
-     * Get sum.
+     * Get sum of all transactions
      */
     public function getSummary($subjectId) : int {
         
@@ -102,6 +102,42 @@ class Ledger {
         
         if (!empty($result[0]))
             return $result[0];
+
+        return false;
+    }
+
+    /**
+     * Get sum of credit (+) transactions
+     */
+    public function getCredits($subjectId) : int {
+        
+        $sql  = "SELECT sum(amount) AS summary FROM {$this->table} WHERE subject_id = {$subjectId} and entry ='CREDIT'";
+        
+        if (!$query = mysqli_query($this->connection, $sql))
+            throw new \Exception('Failed to get ..');    
+        
+        $result = mysqli_fetch_row($query);
+        
+        if (!empty($result[0]))
+            return $result[0];
+
+        return false;
+    }
+
+    /**
+     * Get sum of debit (-) transactions
+     */
+    public function getDebits($subjectId) : int {
+        
+        $sql  = "SELECT sum(amount) AS summary FROM {$this->table} WHERE subject_id = {$subjectId} and entry ='DEBIT'";
+        
+        if (!$query = mysqli_query($this->connection, $sql))
+            throw new \Exception('Failed to get ..');    
+        
+        $result = mysqli_fetch_row($query);
+        
+        if (!empty($result[0]))
+            return abs($result[0]);
 
         return false;
     }

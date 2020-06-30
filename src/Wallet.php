@@ -40,10 +40,32 @@ class Wallet {
     }
 
     /**
+     * Get user total earning
+     */
+    public function getEarning(int $subjectId) : int {
+        return $this->ledger->getCredits($subjectId);
+    }
+
+    /**
+     * Get user total withdrawal
+     */
+    public function getWithdrawal(int $subjectId) : int {
+        return $this->ledger->getDebits($subjectId);
+    }
+
+    /**
      * Get user latest balance
      */
     public function getBalance(int $subjectId) : int {
         return $this->ledger->getSummary($subjectId);
+    }
+
+    /**
+     * Get user latest balance
+     */
+    public function getTransactions(array $where = [], int $limit = 5, int $offset = 0) : array
+    {
+        return $this->transaction->get($where, $limit, $offset);
     }
 
     /**
@@ -54,19 +76,38 @@ class Wallet {
         /** Save transaction. */
         $id = $this->transaction->save([
             'subject_id' => $args['subject_id'],
-            'type' => $args['type'],
-            'currency' => $args['currency'],
             'amount' => $args['amount'],
-            'code' => $args['code'],
-            'metadata' => $args['metadata']
+            'type' => $args['type'] ?? 'INCOME',
+            'currency' => $args['currency'] ?? 'IDR',
+            'code' => $args['code'] ?? '',
+            'metadata' => $args['metadata'] ?? ''
         ]);
         
         /** Save log. */
         $this->log->save([
             'transaction_id' => $id,
-            'status' => $args['status'],
+            'status' => $args['status'] ?? 'CONFIRMED',
         ]);
-        
+
+        /** Save to Ledger for non pending transaction */
+        if(($args['status'] ?? NULL) != 'PENDING')
+        {
+            if (in_array($args['type'], $this->credit)) {
+                $entry = 'CREDIT';
+                $amount = $args['amount'];
+            } else {
+                $entry = 'DEBIT';
+                $amount = '-' . $args['amount'];
+            }
+
+            $this->ledger->save([
+                'subject_id' => $args['subject_id'],
+                'transaction_id' => $id,
+                'amount' => $amount,
+                'entry' => $entry
+            ]);   
+        }
+
         return true;    
     }
 

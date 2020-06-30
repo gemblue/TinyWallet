@@ -20,6 +20,7 @@ class Transaction {
 
     /** Table */
     protected $table = 'wallet_transaction';
+    protected $logTable = 'wallet_transaction_log';
     
     /**
      * Construct
@@ -54,9 +55,19 @@ class Transaction {
     /**
      * Get.
      */
-    public function get($fields = '*', $limit = 5, $order = 0) : array {
+    public function get(array $where = [], $limit = 5, $offset = 0) : array {
         
-        $sql  = "SELECT {$fields}, {$this->table}.id as id, {$this->table}.created_at as created_at FROM {$this->table} JOIN {$this->subjectTable} ON {$this->subjectTable}.id = {$this->table}.subject_id WHERE deleted_at IS NULL LIMIT {$order},{$limit}";
+        $sql  = "SELECT {$this->table}.*, {$this->logTable}.*, {$this->table}.id as id, {$this->table}.created_at as created_at 
+            FROM {$this->table} 
+            JOIN {$this->subjectTable} ON {$this->subjectTable}.id = {$this->table}.subject_id 
+            JOIN {$this->logTable} ON {$this->logTable}.transaction_id = {$this->table}.id 
+            WHERE deleted_at IS NULL ";
+        if($where){
+            foreach ($where as $field => $value) {
+                $sql .= "AND $field = '$value' ";
+            }
+        }
+        $sql .= "ORDER BY {$this->table}.created_at desc LIMIT {$offset},{$limit}";
         
         if (!$query = mysqli_query($this->connection, $sql))
             throw new \Exception('Failed to get ..');    
