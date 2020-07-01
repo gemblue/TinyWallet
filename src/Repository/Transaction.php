@@ -21,6 +21,7 @@ class Transaction {
     /** Table */
     protected $table = 'wallet_transaction';
     protected $logTable = 'wallet_transaction_log';
+    protected $ledgerTable = 'wallet_ledger';
     
     /**
      * Construct
@@ -57,10 +58,11 @@ class Transaction {
      */
     public function get(array $where = [], $limit = 5, $offset = 0) : array {
         
-        $sql  = "SELECT {$this->table}.*, {$this->logTable}.*, {$this->table}.id as id, {$this->table}.created_at as created_at 
+        $sql  = "SELECT {$this->table}.*, {$this->logTable}.*, {$this->ledgerTable}.*, {$this->table}.id as id, {$this->table}.created_at as created_at 
             FROM {$this->table} 
             JOIN {$this->subjectTable} ON {$this->subjectTable}.id = {$this->table}.subject_id 
             JOIN {$this->logTable} ON {$this->logTable}.transaction_id = {$this->table}.id 
+            LEFT JOIN {$this->ledgerTable} ON {$this->ledgerTable}.transaction_id = {$this->table}.id 
             WHERE deleted_at IS NULL ";
         if($where){
             foreach ($where as $field => $value) {
@@ -70,7 +72,7 @@ class Transaction {
         $sql .= "ORDER BY {$this->table}.created_at desc LIMIT {$offset},{$limit}";
         
         if (!$query = mysqli_query($this->connection, $sql))
-            throw new \Exception('Failed to get ..');    
+            throw new \Exception(mysqli_error($this->connection));    
 
         return mysqli_fetch_all($query, MYSQLI_ASSOC);
     }

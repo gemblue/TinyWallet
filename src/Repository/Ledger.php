@@ -129,10 +129,13 @@ class Ledger {
      */
     public function getDebits($subjectId) : int {
         
-        $sql  = "SELECT sum(amount) AS summary FROM {$this->table} WHERE subject_id = {$subjectId} and entry ='DEBIT'";
+        $sql  = "SELECT sum({$this->transaction}.amount) AS summary 
+                FROM {$this->table} 
+                JOIN {$this->transaction} ON {$this->transaction}.id = {$this->table}.transaction_id
+                WHERE {$this->transaction}.subject_id = {$subjectId} and entry ='DEBIT' and type = 'WITHDRAWAL'";
         
         if (!$query = mysqli_query($this->connection, $sql))
-            throw new \Exception('Failed to get ..');    
+            throw new \Exception(mysqli_error($this->connection));
         
         $result = mysqli_fetch_row($query);
         

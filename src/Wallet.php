@@ -23,7 +23,7 @@ class Wallet {
     public $ledger;
     public $transaction;
     public $credit = ['TOPUP', 'HOLD', 'PAYMENT', 'INCOME'];
-    public $debit = ['WITHDRAWAL', 'FEE'];
+    public $debit = ['WITHDRAWAL', 'FEE', 'REFUND'];
     
     /**
      * Construct.
@@ -43,14 +43,14 @@ class Wallet {
      * Get user total earning
      */
     public function getEarning(int $subjectId) : int {
-        return $this->ledger->getCredits($subjectId);
+        return $this->ledger->getCredits($subjectId) ?? 0;
     }
 
     /**
      * Get user total withdrawal
      */
     public function getWithdrawal(int $subjectId) : int {
-        return $this->ledger->getDebits($subjectId);
+        return $this->ledger->getDebits($subjectId) ?? 0;
     }
 
     /**
