@@ -111,7 +111,11 @@ class Ledger {
      */
     public function getCredits($subjectId) : int {
         
-        $sql  = "SELECT sum(amount) AS summary FROM {$this->table} WHERE subject_id = {$subjectId} and entry ='CREDIT'";
+        $sql  = "SELECT sum({$this->table}.amount) AS summary 
+                FROM {$this->table} 
+                JOIN {$this->transaction} ON {$this->transaction}.id = {$this->table}.transaction_id
+                WHERE ({$this->transaction}.subject_id = {$subjectId} and entry ='CREDIT')
+                OR ({$this->transaction}.subject_id = {$subjectId} and entry ='DEBIT') and type = 'REFUND' ";
         
         if (!$query = mysqli_query($this->connection, $sql))
             throw new \Exception('Failed to get ..');    
